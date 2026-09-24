@@ -1,0 +1,63 @@
+{
+  "id": "pf2e-fat-flanking",
+  "title": "PF2e/SF2e Fat Flanking",
+  "version": "#{VERSION}#",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "14.367"
+  },
+  "esmodules": [
+    "pf2e-drag-attach.js"
+  ],
+  "styles": [
+    "pf2e-drag-attach.css"
+  ],
+  "authors": [
+    {
+      "name": "kromko",
+      "flags": {}
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json",
+      "flags": {}
+    }
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "pf2e",
+        "type": "system",
+        "manifest": "https://raw.githubusercontent.com/foundryvtt/pf2e/master/system.json",
+        "compatibility": {
+          "minimum": "7.12.0",
+          "verified": "8.4.1"
+        }
+      },
+      {
+        "id": "sf2e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "0.0.1",
+          "verified": "1.4.1"
+        }
+      }
+    ],
+    "requires": [
+      {
+        "id": "lib-wrapper",
+        "manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json",
+        "type": "module",
+        "compatibility": {}
+      }
+    ]
+  },
+  "description": "<p>Small module to treat large creatures as a grid of smaller creatures when calculating flanking.</p>",
+  "url": "#{URL}#",
+  "manifest": "#{MANIFEST}#",
+  "download": "#{DOWNLOAD}#",
+  "changelog": "https://github.com/Cuingamehtar/fvtt-pf2e-drag-attach/blob/main/CHANGELOG.md"
+}
