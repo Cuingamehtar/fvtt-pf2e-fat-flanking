@@ -23,11 +23,6 @@ function findFlankingPoints(
 ) {
     const Ray = foundry.canvas.geometry.Ray;
     const bounds = flankee.mechanicalBounds;
-    const flankeeCenter = {
-        x: (bounds.left + bounds.right) / 2,
-        y: (bounds.top + bounds.bottom) / 2,
-        elevation: flankee.document.elevation,
-    };
     const left = new Ray(
         { x: bounds.left, y: bounds.top },
         { x: bounds.left, y: bounds.bottom },
@@ -45,22 +40,18 @@ function findFlankingPoints(
         { x: bounds.right, y: bounds.bottom },
     );
 
+    function distanceFromToken(t: TokenPF2e, target: PIXI.Point) {
+        return t.distanceTo(target);
+    }
+
     const reachA = flankerA.actor?.getReach({}) ?? 5;
     const reachB = flankerB.actor?.getReach({}) ?? 5;
 
     const gridA = grid2d(flankerA.mechanicalBounds, grid.size).filter(
-        (p) =>
-            grid.measurePath([
-                { ...p, elevation: flankerA.document.elevation },
-                flankeeCenter,
-            ]).distance <= reachA,
+        (p) => distanceFromToken(flankee, p) <= reachA,
     );
     const gridB = grid2d(flankerB.mechanicalBounds, grid.size).filter(
-        (p) =>
-            grid.measurePath([
-                { ...p, elevation: flankerA.document.elevation },
-                flankeeCenter,
-            ]).distance <= reachB,
+        (p) => distanceFromToken(flankee, p) <= reachB,
     );
 
     const intersectsSide = (
@@ -137,4 +128,6 @@ Hooks.once("refreshToken", (token: TokenPF2e) => {
             this.token = oToken;
         },
     );
+
+    delete globalThis.__ffHighlight;
 });
