@@ -110,9 +110,8 @@ jobs:
                      ./module.zip                        \
                     `# The files that will be included.` \
                     module.json                          \
-                    pf2e-drag-attach.js                  \
-                    pf2e-drag-attach.js.map              \
-                    pf2e-drag-attach.css                 \
+                    pf2e-fat-flanking.js                 \
+                    pf2e-fat-flanking.js.map             \
                     CHANGELOG.md                         \
                     README.md                            \
                     LICENSE                              \

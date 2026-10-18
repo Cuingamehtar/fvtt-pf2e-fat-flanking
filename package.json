@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "esbuild src/module.ts --bundle --keep-names --minify --sourcemap --drop-labels=DEV --outfile=pf2e-drag-attach.js",
-    "dev": "esbuild src/module.ts --bundle --keep-names --watch --sourcemap --outfile=pf2e-drag-attach.js"
+    "build": "esbuild src/module.ts --bundle --keep-names --minify --sourcemap --drop-labels=DEV --outfile=pf2e-fat-flanking.js",
+    "dev": "esbuild src/module.ts --bundle --keep-names --watch --sourcemap --outfile=pf2e-fat-flanking.js"
   },
   "devDependencies": {
     "@7h3laughingman/pf2e-types": "^8.0.2",
