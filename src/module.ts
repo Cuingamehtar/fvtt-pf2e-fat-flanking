@@ -127,6 +127,7 @@ Hooks.once("refreshToken", (token: TokenPF2e) => {
             }
             this.token = oToken;
         },
+        "MIXED",
     );
 
     delete globalThis.__ffHighlight;
