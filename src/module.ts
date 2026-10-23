@@ -1,4 +1,7 @@
-import { TokenPF2e } from "@7h3laughingman/pf2e-types";
+import {
+    FlankingHighlightRenderer,
+    TokenPF2e,
+} from "@7h3laughingman/pf2e-types";
 
 const MODULE_ID = "pf2e-fat-flanking";
 Hooks.once("ready", init);
@@ -44,8 +47,8 @@ function findFlankingPoints(
         return t.distanceTo(target);
     }
 
-    const reachA = flankerA.actor?.getReach({}) ?? 5;
-    const reachB = flankerB.actor?.getReach({}) ?? 5;
+    const reachA = flankerA.actor?.getReach({ action: "attack" }) ?? 5;
+    const reachB = flankerB.actor?.getReach({ action: "attack" }) ?? 5;
 
     const gridA = grid2d(flankerA.mechanicalBounds, grid.size).filter(
         (p) => distanceFromToken(flankee, p) <= reachA,
@@ -112,14 +115,18 @@ Hooks.once("refreshToken", (token: TokenPF2e) => {
     libWrapper.register(
         MODULE_ID,
         "__ffHighlight.__proto__.drawForTarget",
-        function (wrapped, target: TokenPF2e) {
+        function (
+            this: FlankingHighlightRenderer,
+            _: FlankingHighlightRenderer["drawForTarget"],
+            target: TokenPF2e,
+        ) {
             const grid = this.token.grid ?? canvas.scene?.grid;
             const pairs = this.token
                 .buddiesFlanking(target, {
                     ignoreFlankable: true,
                 })
                 .map((b) => findFlankingPoints(this.token, b, target, grid))
-                .filter(Boolean);
+                .filter((p) => p !== null);
             const oToken = this.token;
             for (const { a, b } of pairs) {
                 this.token = { layer: this.token.layer, center: a };
