@@ -125,12 +125,26 @@ Hooks.once("refreshToken", (token: TokenPF2e) => {
                 .buddiesFlanking(target, {
                     ignoreFlankable: true,
                 })
-                .map((b) => findFlankingPoints(this.token, b, target, grid))
+                .map((buddy) => {
+                    const points = findFlankingPoints(
+                        this.token,
+                        buddy,
+                        target,
+                        grid,
+                    );
+                    return (
+                        points && {
+                            points,
+                            buddy,
+                        }
+                    );
+                })
                 .filter((p) => p !== null);
             const oToken = this.token;
-            for (const { a, b } of pairs) {
-                this.token = { layer: this.token.layer, center: a };
-                this.drawBuddyLine({ center: b });
+            for (const { points, buddy } of pairs) {
+                const proxyA = tokenProxy(this.token, points.a);
+                this.token = proxyA;
+                this.drawBuddyLine(tokenProxy(buddy, points.b));
             }
             this.token = oToken;
         },
@@ -139,3 +153,14 @@ Hooks.once("refreshToken", (token: TokenPF2e) => {
 
     delete globalThis.__ffHighlight;
 });
+
+function tokenProxy(token: TokenPF2e, center: PIXI.Point) {
+    return new Proxy(token, {
+        get: (target, p, receiver) => {
+            if (p === "center") {
+                return center;
+            }
+            return Reflect.get(target, p, receiver);
+        },
+    });
+}
